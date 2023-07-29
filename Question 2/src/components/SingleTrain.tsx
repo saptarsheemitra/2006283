@@ -1,38 +1,27 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
-import { Train } from '../api/api'
+import React from 'react';
 
-interface SingleTrainProps {
-  trains: Train[]
+interface Train {
+  trainName: string;
+  trainNumber: string;
 }
 
-const SingleTrain = ({ trains }: SingleTrainProps) => {
-  const { trainNumber } = useParams<{ trainNumber: string }>()
+interface Props {
+  train: Train | null;
+}
 
-  const selectedTrain = trains.find(
-    (train) => train.trainNumber === trainNumber,
-  )
-
-  if (!selectedTrain) {
-    return <div>Train not found!</div>
+const SingleTrain = ({ train }:Props) => {
+    
+  if (!train) {
+    return <p>Loading train data...</p>;
   }
 
   return (
     <div>
-      <h2>Train Details</h2>
-      <p>Train Name: {selectedTrain.trainName}</p>
-      <p>Train Number: {selectedTrain.trainNumber}</p>
-      <p>
-        Departure Time: {selectedTrain.departureTime.Hours}:
-        {selectedTrain.departureTime.Minutes}
-      </p>
-      <p>Seats Available (Sleeper): {selectedTrain.seatsAvailable.sleeper}</p>
-      <p>Seats Available (AC): {selectedTrain.seatsAvailable.AC}</p>
-      <p>Price (Sleeper): {selectedTrain.price.sleeper}</p>
-      <p>Price (AC): {selectedTrain.price.AC}</p>
-      <p>Delayed By: {selectedTrain.delayedBy} minutes</p>
+      <h1>Single Train</h1>
+      <h2>{train.trainName}</h2>
+      <p>Train Number: {train.trainNumber}</p>
     </div>
-  )
-}
+  );
+};
 
-export default SingleTrain
+export default SingleTrain;
